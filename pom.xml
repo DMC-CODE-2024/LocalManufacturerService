@@ -56,7 +56,7 @@
     </dependencies>
 
     <build>
-        <finalName>local_manufactured</finalName>
+        <finalName>local_manufacturer</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

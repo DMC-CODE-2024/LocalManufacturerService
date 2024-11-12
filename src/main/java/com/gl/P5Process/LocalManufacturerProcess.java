@@ -23,7 +23,8 @@ public class LocalManufacturerProcess {
     }
 
     public static void updateNwl(Connection conn, String table, String lastRunTime, String status) {
-        String q = "update app.national_whitelist set gdce_imei_status = " + status + " , gdce_modified_time =CURRENT_TIMESTAMP  where gdce_imei_status in (0,3)   and imei in( select imei from app." + table + " where created_on >= '" + lastRunTime + "' )  ";
+        //    String q = "update app.national_whitelist set gdce_imei_status = " + status + " , gdce_modified_time =CURRENT_TIMESTAMP  where gdce_imei_status in (0,3)   and imei in( select imei from app." + table + " where created_on >= '" + lastRunTime + "' )  ";
+        String q = " UPDATE app.national_whitelist nw JOIN app.trc_local_manufactured_device_data lm ON nw.imei = lm.imei SET nw.gdce_imei_status = " + status + " ,nw.gdce_modified_time = CURRENT_TIMESTAMP WHERE nw.gdce_imei_status IN (0, 3) AND lm.created_on >=  '" + lastRunTime + "'  ";
         QueryExecuter.runQuery(conn, q);
     }
 

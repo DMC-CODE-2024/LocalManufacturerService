@@ -21,14 +21,14 @@ public class QueryExecuter {
         } catch (Exception e) {
             var lastMethodName = Thread.currentThread().getStackTrace()[2].getMethodName();
             log.error(lastMethodName + " : Unable to run query: " + e.getLocalizedMessage() + " [Query] :" + query);
-            new AlertService().raiseAnAlert("alert1607", e.getLocalizedMessage().replaceAll("'", " "), "RegisterIMEIUpdate ", 0, conn);
+            new AlertService().raiseAnAlert("alert1607", "Not able to execute the query for Local Manufacturer", "LocalManufacturerService ", 0, conn);
         }
         return a;
     }
 
     public static String getLastRunDate(Connection conn, String tag) {
         String date = "2000-01-01";
-        String query = "  select  IFNULL(value, '"+date+"') as value from sys_param where tag='" + tag + "'";
+        String query = "  select  IFNULL(value, '" + date + "') as value from sys_param where tag='" + tag + "'";
         try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query);) {
             if (rs.next()) {
                 date = rs.getString("value");
